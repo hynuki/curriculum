@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor de Currículo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            background-color: #444;
+            color: white;
+            padding: 8px 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        textarea, input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Editor de Currículo</h1>
+
+        <label>Nome Completo:</label>
+        <input type="text" id="nome">
+
+        <label>Dados Pessoais:</label>
+        <textarea id="dadosPessoais"></textarea>
+		
+		<label>Perfil Profissional:</label>
+<select id="perfil" onchange="preencherPalavrasChave()">
+    <option value="">-- Selecione --</option>
+    <option value="Sou um profissional com ampla experiência na área de Recursos Humanos, atuando no recrutamento, seleção e desenvolvimento de pessoas. Tenho sólida experiência em treinamento, além de domínio sobre a legislação trabalhista e processos de admissões e demissões. Busco contribuir com minha expertise para o aprimoramento contínuo dos processos de gestão de pessoas e alcançar os objetivos organizacionais.",>Recursos Humanos</option>
+    <option value="Com experiência em marketing digital, busco aplicar minhas habilidades em SEO, SEM, campanhas de marketing e análise de dados para promover a presença online das empresas. Tenho conhecimento avançado em gestão de mídias sociais e na criação de estratégias de marketing digital que aumentam a visibilidade e as vendas. Meu objetivo é impulsionar resultados positivos por meio da inovação e criatividade.">Marketing</option>
+    <option value="Profissional com sólida experiência em vendas consultivas, desenvolvimento de negócios e negociação. Meu objetivo é expandir e consolidar a base de clientes, com foco na gestão de relacionamento e satisfação dos clientes. Busco aplicar minhas habilidades de negociação e estratégias comerciais para atingir e superar as metas estabelecidas pela empresa">Vendas</option>
+    <option value="Sou especialista em desenvolvimento web e análise de sistemas, com experiência em programação e administração de banco de dados. Tenho amplo conhecimento em segurança da informação e sistemas operacionais, e meu objetivo é aplicar minhas habilidades técnicas para otimizar processos e implementar soluções inovadoras que atendam às necessidades da empresa.">Tecnologia</option>
+    <option value="Atuo como gestor de projetos, com foco em liderança e definição de estratégias empresariais. Tenho experiência na análise de desempenho organizacional e na tomada de decisões estratégicas para alcançar os objetivos de longo prazo da empresa. Busco sempre aprimorar processos e promover uma gestão eficiente que maximize os resultados e a competitividade da organização.">Gestão</option>
+    <option value="Tenho experiência em gestão de serviços funerários e planejamento funerário, além de amplo conhecimento sobre a legislação de cemitérios e serviços pós-morte. Busco aplicar minha expertise para oferecer suporte aos clientes de forma respeitosa e eficiente, garantindo a continuidade e a qualidade dos serviços funerários prestados pela organização.">Cemiterial</option>
+    <option value="Como designer gráfico, tenho experiência no desenvolvimento de layouts criativos e funcionais, com especialização em UX/UI. Estou familiarizado com ferramentas como Adobe Photoshop e Illustrator e busco aplicar minhas habilidades para criar designs inovadores e centrados no usuário, contribuindo para a melhoria da experiência visual e interativa do público-alvo.">Design</option>
+    <option value="Sou um profissional com experiência em sustentabilidade e governança corporativa. Tenho conhecimento profundo em compliance, responsabilidade social e ética empresarial, com o objetivo de promover práticas empresariais responsáveis e que atendam às exigências legais e sociais. Busco contribuir com ações que favoreçam o equilíbrio entre os aspectos econômicos, ambientais e sociais.">ASG (Ambiental, Social e Governança)</option>
+    <option value="Atuo na área financeira, com experiência em análise de fluxo de caixa, contabilidade e auditoria. Tenho conhecimentos sólidos em planejamento orçamentário e gestão de investimentos, com o objetivo de otimizar os recursos financeiros da empresa, garantir a conformidade com as regulamentações fiscais e alcançar uma gestão eficiente dos ativos.">Financeiro</option>
+    <option value="Sou advogado especializado em direito corporativo e contratual, com experiência em litígios e consultoria jurídica. Busco aplicar minhas habilidades em mediação e arbitragem para resolver disputas de forma eficiente e legal, garantindo a conformidade da empresa com as normas e regulamentos em vigor.">Jurídico</option>
+    <option value="Tenho experiência em gestão de estoques, transporte e otimização da cadeia de suprimentos. Meu objetivo é aplicar minhas habilidades em planejamento logístico para melhorar a eficiência operacional, reduzir custos e garantir o fluxo contínuo de mercadorias, sempre com foco em qualidade e prazos de entrega.">Logística</option>
+    <option value="Sou profissional da área de saúde, com vasta experiência em atendimento ao paciente e gestão hospitalar. Tenho forte compromisso com a medicina preventiva e com a melhoria da saúde pública, buscando sempre implementar soluções que promovam o bem-estar e a qualidade de vida dos pacientes.">Saúde</option>
+    <option value="Atuo na área educacional, com experiência em ensino superior e planejamento educacional. Busco aplicar minhas habilidades em métodos de ensino e e-learning para promover uma educação de qualidade e acessível, sempre com foco no desenvolvimento acadêmico e pessoal dos alunos.">Educação</option>
+    <option value="Sou engenheiro civil com ampla experiência em projetos de construção e gerenciamento de obras. Tenho habilidades em análise estrutural e segurança do trabalho, e busco aplicar meus conhecimentos para entregar projetos de alta qualidade e garantir a segurança e a integridade das obras e dos envolvidos.">Engenharia</option>
+    <option value="Tenho experiência na gestão de contas e estratégias comerciais, com foco em vendas e atendimento ao cliente. Meu objetivo é aplicar minha experiência em negociação e análise de mercado para desenvolver soluções personalizadas, atender as necessidades dos clientes e aumentar os resultados comerciais da empresa.">Comercial</option>
+    <option value="Com amplo conhecimento em SEO, SEM e marketing de conteúdo, busco aplicar minhas habilidades em marketing digital para promover campanhas eficientes e aumentar a visibilidade online da empresa. Tenho experiência em e-commerce e campanhas nas redes sociais, sempre com foco em resultados mensuráveis e melhoria contínua.">Marketing Digital</option>
+    <option value="Tenho experiência na criação de campanhas publicitárias, gestão de identidade visual e redação publicitária. Busco aplicar minha criatividade e habilidades de planejamento de mídia para criar campanhas impactantes que engajem o público e aumentem a presença da marca no mercado.">Publicidade</option>
+    <option value="Sou um profissional da área agropecuária, com experiência em gestão rural e produção agrícola. Tenho conhecimento em zootecnia e sustentabilidade no campo, e busco contribuir com minha expertise para otimizar os processos de produção e garantir a sustentabilidade e o crescimento da atividade agropecuária.">Agropecuária</option>
+    <option value="Tenho experiência em projetos arquitetônicos e engenharia estrutural, com foco no gerenciamento de obras e segurança do trabalho. Busco aplicar minhas habilidades para garantir a entrega de obras com qualidade, segurança e dentro do prazo, sempre buscando soluções eficientes e sustentáveis.">Construção Civil</option>
+    <option value="Tenho experiência no setor de energia, com foco em fontes renováveis, como energia solar e eólica. Busco aplicar meus conhecimentos em eficiência energética e redes elétricas para desenvolver soluções inovadoras que atendam às necessidades do mercado, contribuindo para a sustentabilidade e a redução dos impactos ambientais.">Energia</option>
+    <option value="Sou um profissional com experiência em gestão ambiental e licenciamento, com o objetivo de promover práticas sustentáveis e políticas públicas ambientais. Busco implementar soluções que contribuam para a preservação do meio ambiente e para o desenvolvimento de atividades empresariais responsáveis e compatíveis com as exigências ambientais.">Meio Ambiente</option>
+    <option value="Tenho experiência em gestão turística e roteiros, com foco em hospitalidade e eventos. Meu objetivo é proporcionar experiências únicas aos turistas, promovendo o ecoturismo e criando pacotes personalizados que atendam às necessidades e expectativas dos clientes">Turismo</option>
+    <option value="Sou profissional da área de arte e cultura, com experiência na produção cultural, curadoria e gestão de eventos. Busco contribuir para o desenvolvimento de projetos culturais inovadores, fomentando o acesso à arte e à cultura e promovendo a valorização das manifestações culturais locais.">Arte e Cultura</option>
+    <option value="Sou especialista em comunicação organizacional e jornalismo, com experiência em assessoria de imprensa e produção textual. Meu objetivo é aplicar minhas habilidades em mídias sociais e comunicação estratégica para fortalecer a imagem institucional da empresa e garantir uma comunicação clara e eficiente com o público.">Comunicação</option>
+    <option value="Tenho experiência na gestão de frota e logística de transportes, com foco em otimização de processos e infraestrutura viária. Meu objetivo é melhorar a eficiência e a segurança no transporte de mercadorias e pessoas, garantindo a redução de custos e o cumprimento de prazos.">Transporte</option>
+    <option value="Tenho conhecimento em comércio exterior, com experiência em importação, exportação e logística internacional. Busco aplicar minhas habilidades em acordos comerciais e câmbio para otimizar os processos de importação e exportação, promovendo a competitividade da empresa no mercado internacional.">Comércio Exterior</option>
+    <option value="Sou especialista em tecnologia de alimentos, com experiência em processamento de alimentos e controle de qualidade. Meu objetivo é garantir a segurança alimentar e promover a inovação no setor, contribuindo para o desenvolvimento de novos produtos e processos alimentícios.">Tecnologia de Alimentos</option>
+    <option value="Tenho experiência em pesquisa científica, com forte conhecimento em metodologia científica, coleta de dados e análise estatística. Busco aplicar minhas habilidades para desenvolver projetos de pesquisa inovadores e de alto impacto, contribuindo para o avanço do conhecimento na área.">Pesquisa</option>
+    <option value="Tenho experiência em serviços gerais, incluindo limpeza, manutenção predial e portaria. Meu objetivo é contribuir para o bom funcionamento das instalações, garantindo a qualidade e a organização do ambiente de trabalho.">Serviços Gerais</option>
+    <option value="Sou um profissional da área de administração, com experiência em planejamento estratégico, controle orçamentário e análise de processos. Busco aplicar minhas habilidades para otimizar a gestão da empresa, promovendo eficiência, redução de custos e alcance dos objetivos empresariais.">Administração</option>
+</select>
+		
+		<label>Idiomas:</label>
+        <textarea id="idiomas"></textarea>
+		
+		<label>Cursos de Qualificação:</label>
+        <textarea id="cursosdequalificacao"></textarea>
+
+        <label>Formação Acadêmica:</label>
+        <textarea id="formacao"></textarea>
+
+        <label>Experiência Profissional:</label>
+        <textarea id="experiencia"></textarea>
+
+        <label>Produção Bibliográfica e Técnica:</label>
+        <textarea id="producao"></textarea>
+
+        <label>Atividades de Extensão:</label>
+        <textarea id="extensao"></textarea>
+
+        <label>Eventos:</label>
+        <textarea id="eventos"></textarea>
+
+        <label>Orientações:</label>
+        <textarea id="orientacoes"></textarea>
+
+        <label>Bancas:</label>
+        <textarea id="bancas"></textarea>
+
+        <label>Indicadores:</label>
+        <textarea id="indicadores"></textarea>
+
+       <label>Área Profissional 1:</label>
+<select id="area1" onchange="preencherPalavrasChave()">
+    <option value="">-- Selecione --</option>
+    <option value="rh">Recursos Humanos</option>
+    <option value="marketing">Marketing</option>
+    <option value="vendas">Vendas</option>
+    <option value="tecnologia">Tecnologia</option>
+    <option value="gestao">Gestão</option>
+    <option value="cemiterial">Cemiterial</option>
+    <option value="design">Design</option>
+    <option value="asg">ASG (Ambiental, Social e Governança)</option>
+    <option value="financeiro">Financeiro</option>
+    <option value="juridico">Jurídico</option>
+    <option value="logistica">Logística</option>
+    <option value="saude">Saúde</option>
+    <option value="educacao">Educação</option>
+    <option value="engenharia">Engenharia</option>
+    <option value="comercial">Comercial</option>
+    <option value="marketingDigital">Marketing Digital</option>
+    <option value="publicidade">Publicidade</option>
+    <option value="agropecuaria">Agropecuária</option>
+    <option value="construçãoCivil">Construção Civil</option>
+    <option value="energia">Energia</option>
+    <option value="meioAmbiente">Meio Ambiente</option>
+    <option value="turismo">Turismo</option>
+    <option value="arteCultura">Arte e Cultura</option>
+    <option value="comunicacao">Comunicação</option>
+    <option value="transporte">Transporte</option>
+    <option value="comercioExterior">Comércio Exterior</option>
+    <option value="tecnologiaAlimentos">Tecnologia de Alimentos</option>
+    <option value="pesquisa">Pesquisa</option>
+    <option value="servicosGerais">Serviços Gerais</option>
+    <option value="administração">Administração</option>
+</select>
+
+<label>Área Profissional 2:</label>
+<select id="area2" onchange="preencherPalavrasChave()">
+    <option value="">-- Selecione --</option>
+    <option value="rh">Recursos Humanos</option>
+    <option value="marketing">Marketing</option>
+    <option value="vendas">Vendas</option>
+    <option value="tecnologia">Tecnologia</option>
+    <option value="gestao">Gestão</option>
+    <option value="cemiterial">Cemiterial</option>
+    <option value="design">Design</option>
+    <option value="asg">ASG (Ambiental, Social e Governança)</option>
+    <option value="financeiro">Financeiro</option>
+    <option value="juridico">Jurídico</option>
+    <option value="logistica">Logística</option>
+    <option value="saude">Saúde</option>
+    <option value="educacao">Educação</option>
+    <option value="engenharia">Engenharia</option>
+    <option value="comercial">Comercial</option>
+    <option value="marketingDigital">Marketing Digital</option>
+    <option value="publicidade">Publicidade</option>
+    <option value="agropecuaria">Agropecuária</option>
+    <option value="construçãoCivil">Construção Civil</option>
+    <option value="energia">Energia</option>
+    <option value="meioAmbiente">Meio Ambiente</option>
+    <option value="turismo">Turismo</option>
+    <option value="arteCultura">Arte e Cultura</option>
+    <option value="comunicacao">Comunicação</option>
+    <option value="transporte">Transporte</option>
+    <option value="comercioExterior">Comércio Exterior</option>
+    <option value="tecnologiaAlimentos">Tecnologia de Alimentos</option>
+    <option value="pesquisa">Pesquisa</option>
+    <option value="servicosGerais">Serviços Gerais</option>
+    <option value="administração">Administração</option>
+</select>
+
+<label>Área Profissional 3:</label>
+<select id="area3" onchange="preencherPalavrasChave()">
+    <option value="">-- Selecione --</option>
+    <option value="rh">Recursos Humanos</option>
+    <option value="marketing">Marketing</option>
+    <option value="vendas">Vendas</option>
+    <option value="tecnologia">Tecnologia</option>
+    <option value="gestao">Gestão</option>
+    <option value="cemiterial">Cemiterial</option>
+    <option value="design">Design</option>
+    <option value="asg">ASG (Ambiental, Social e Governança)</option>
+    <option value="financeiro">Financeiro</option>
+    <option value="juridico">Jurídico</option>
+    <option value="logistica">Logística</option>
+    <option value="saude">Saúde</option>
+    <option value="educacao">Educação</option>
+    <option value="engenharia">Engenharia</option>
+    <option value="comercial">Comercial</option>
+    <option value="marketingDigital">Marketing Digital</option>
+    <option value="publicidade">Publicidade</option>
+    <option value="agropecuaria">Agropecuária</option>
+    <option value="construçãoCivil">Construção Civil</option>
+    <option value="energia">Energia</option>
+    <option value="meioAmbiente">Meio Ambiente</option>
+    <option value="turismo">Turismo</option>
+    <option value="arteCultura">Arte e Cultura</option>
+    <option value="comunicacao">Comunicação</option>
+    <option value="transporte">Transporte</option>
+    <option value="comercioExterior">Comércio Exterior</option>
+    <option value="tecnologiaAlimentos">Tecnologia de Alimentos</option>
+    <option value="pesquisa">Pesquisa</option>
+    <option value="servicosGerais">Serviços Gerais</option>
+    <option value="administração">Administração</option>
+</select>
+
+<label>Palavras-chave e Competências:</label>
+<textarea id="keywords"></textarea>
+
+<button onclick="gerarPDF()">Exportar para PDF</button>
+
+<script>
+    const palavrasChave = {
+        rh: "Admissão, demissão, recrutamento, seleção, treinamento, desenvolvimento, legislação trabalhista.",
+        marketing: "Marketing digital, SEO, SEM, campanhas de marketing, análise de dados, gestão de mídias sociais.",
+        vendas: "Vendas consultivas, gestão de clientes, desenvolvimento de negócios, negociação.",
+        tecnologia: "Programação, desenvolvimento web, banco de dados, análise de sistemas, sistemas operacionais, segurança da informação.",
+        gestao: "Gestão de projetos, liderança, estratégia empresarial, análise de desempenho, tomada de decisão.",
+        cemiterial: "Planejamento funerário, legislação cemitério, administração de cemitérios, serviços funerários, cuidados pós-morte.",
+        design: "Design gráfico, UX/UI, Adobe Photoshop, Illustrator, design de produto, design de experiência.",
+        asg: "Sustentabilidade, responsabilidade social, governança corporativa, compliance, ética empresarial.",
+        financeiro: "Análise financeira, fluxo de caixa, investimentos, contabilidade, auditoria, planejamento orçamentário.",
+        juridico: "Direito corporativo, direito contratual, litígios, consultoria jurídica, compliance, mediação e arbitragem.",
+        logistica: "Gestão de estoques, transporte, cadeia de suprimentos, planejamento logístico, otimização de processos.",
+        saude: "Atendimento ao paciente, gestão hospitalar, cuidados de saúde, medicina preventiva, saúde pública.",
+        educacao: "Ensino superior, planejamento educacional, gestão de salas de aula, métodos de ensino, e-learning.",
+        engenharia: "Engenharia civil, engenharia elétrica, projetos de construção, análise estrutural, gerenciamento de obras.",
+        comercial: "Gestão de contas, negociação comercial, estratégias de vendas, atendimento ao cliente, análise de mercado.",
+        marketingDigital: "SEO, SEM, marketing de conteúdo, e-commerce, campanhas em redes sociais, análise de performance digital.",
+        publicidade: "Criação de campanhas publicitárias, identidade visual, redação publicitária, planejamento de mídia.",
+        agropecuaria: "Gestão rural, produção agrícola, zootecnia, sustentabilidade no campo, manejo de culturas.",
+        construçãoCivil: "Projetos arquitetônicos, gerenciamento de obras, engenharia estrutural, segurança do trabalho.",
+        energia: "Fontes renováveis, eficiência energética, redes elétricas, energia solar e eólica, regulamentações do setor.",
+        meioAmbiente: "Gestão ambiental, licenciamento, sustentabilidade, conservação, políticas públicas ambientais.",
+        turismo: "Gestão turística, roteiros, hospitalidade, eventos, ecoturismo, agências de viagem.",
+        arteCultura: "Produção cultural, curadoria, artes visuais, música, teatro, políticas culturais.",
+        comunicacao: "Comunicação organizacional, jornalismo, mídias sociais, assessoria de imprensa, produção textual.",
+        transporte: "Gestão de frota, logística de transportes, infraestrutura viária, transporte urbano.",
+        comercioExterior: "Importação, exportação, logística internacional, acordos comerciais, câmbio.",
+        tecnologiaAlimentos: "Processamento de alimentos, controle de qualidade, segurança alimentar, P&D.",
+        pesquisa: "Metodologia científica, coleta de dados, análise estatística, revisão bibliográfica.",
+        servicosGerais: "Limpeza, manutenção predial, serviços de copa, jardinagem, portaria.",
+        administração: "Planejamento estratégico, controle orçamentário, liderança, análise de processos."
+    }
+	
+	const objetivos = {
+    obejetivrh: "Sou um profissional com ampla experiência na área de Recursos Humanos, atuando no recrutamento, seleção e desenvolvimento de pessoas. Tenho sólida experiência em treinamento, além de domínio sobre a legislação trabalhista e processos de admissões e demissões. Busco contribuir com minha expertise para o aprimoramento contínuo dos processos de gestão de pessoas e alcançar os objetivos organizacionais.",
+    obejetivmarketing: "Com experiência em marketing digital, busco aplicar minhas habilidades em SEO, SEM, campanhas de marketing e análise de dados para promover a presença online das empresas. Tenho conhecimento avançado em gestão de mídias sociais e na criação de estratégias de marketing digital que aumentam a visibilidade e as vendas. Meu objetivo é impulsionar resultados positivos por meio da inovação e criatividade.",
+    obejetivvendas: "Profissional com sólida experiência em vendas consultivas, desenvolvimento de negócios e negociação. Meu objetivo é expandir e consolidar a base de clientes, com foco na gestão de relacionamento e satisfação dos clientes. Busco aplicar minhas habilidades de negociação e estratégias comerciais para atingir e superar as metas estabelecidas pela empresa.",
+    obejetivtecnologia: "Sou especialista em desenvolvimento web e análise de sistemas, com experiência em programação e administração de banco de dados. Tenho amplo conhecimento em segurança da informação e sistemas operacionais, e meu objetivo é aplicar minhas habilidades técnicas para otimizar processos e implementar soluções inovadoras que atendam às necessidades da empresa.",
+    obejetivgestao: "Atuo como gestor de projetos, com foco em liderança e definição de estratégias empresariais. Tenho experiência na análise de desempenho organizacional e na tomada de decisões estratégicas para alcançar os objetivos de longo prazo da empresa. Busco sempre aprimorar processos e promover uma gestão eficiente que maximize os resultados e a competitividade da organização.",
+    obejetivcemiterial: "Tenho experiência em gestão de serviços funerários e planejamento funerário, além de amplo conhecimento sobre a legislação de cemitérios e serviços pós-morte. Busco aplicar minha expertise para oferecer suporte aos clientes de forma respeitosa e eficiente, garantindo a continuidade e a qualidade dos serviços funerários prestados pela organização.",
+    obejetivdesign: "Como designer gráfico, tenho experiência no desenvolvimento de layouts criativos e funcionais, com especialização em UX/UI. Estou familiarizado com ferramentas como Adobe Photoshop e Illustrator e busco aplicar minhas habilidades para criar designs inovadores e centrados no usuário, contribuindo para a melhoria da experiência visual e interativa do público-alvo.",
+    obejetivasg: "Sou um profissional com experiência em sustentabilidade e governança corporativa. Tenho conhecimento profundo em compliance, responsabilidade social e ética empresarial, com o objetivo de promover práticas empresariais responsáveis e que atendam às exigências legais e sociais. Busco contribuir com ações que favoreçam o equilíbrio entre os aspectos econômicos, ambientais e sociais.",
+    obejetivfinanceiro: "Atuo na área financeira, com experiência em análise de fluxo de caixa, contabilidade e auditoria. Tenho conhecimentos sólidos em planejamento orçamentário e gestão de investimentos, com o objetivo de otimizar os recursos financeiros da empresa, garantir a conformidade com as regulamentações fiscais e alcançar uma gestão eficiente dos ativos.",
+    obejetivjuridico: "Sou advogado especializado em direito corporativo e contratual, com experiência em litígios e consultoria jurídica. Busco aplicar minhas habilidades em mediação e arbitragem para resolver disputas de forma eficiente e legal, garantindo a conformidade da empresa com as normas e regulamentos em vigor.",
+    obejetivlogistica: "Tenho experiência em gestão de estoques, transporte e otimização da cadeia de suprimentos. Meu objetivo é aplicar minhas habilidades em planejamento logístico para melhorar a eficiência operacional, reduzir custos e garantir o fluxo contínuo de mercadorias, sempre com foco em qualidade e prazos de entrega.",
+    obejetivsaude: "Sou profissional da área de saúde, com vasta experiência em atendimento ao paciente e gestão hospitalar. Tenho forte compromisso com a medicina preventiva e com a melhoria da saúde pública, buscando sempre implementar soluções que promovam o bem-estar e a qualidade de vida dos pacientes.",
+    obejetiveducacao: "Atuo na área educacional, com experiência em ensino superior e planejamento educacional. Busco aplicar minhas habilidades em métodos de ensino e e-learning para promover uma educação de qualidade e acessível, sempre com foco no desenvolvimento acadêmico e pessoal dos alunos.",
+    obejetivengenharia: "Sou engenheiro civil com ampla experiência em projetos de construção e gerenciamento de obras. Tenho habilidades em análise estrutural e segurança do trabalho, e busco aplicar meus conhecimentos para entregar projetos de alta qualidade e garantir a segurança e a integridade das obras e dos envolvidos.",
+    obejetivcomercial: "Tenho experiência na gestão de contas e estratégias comerciais, com foco em vendas e atendimento ao cliente. Meu objetivo é aplicar minha experiência em negociação e análise de mercado para desenvolver soluções personalizadas, atender as necessidades dos clientes e aumentar os resultados comerciais da empresa.",
+    obejetivmarketingDigital: "Com amplo conhecimento em SEO, SEM e marketing de conteúdo, busco aplicar minhas habilidades em marketing digital para promover campanhas eficientes e aumentar a visibilidade online da empresa. Tenho experiência em e-commerce e campanhas nas redes sociais, sempre com foco em resultados mensuráveis e melhoria contínua.",
+    obejetivpublicidade: "Tenho experiência na criação de campanhas publicitárias, gestão de identidade visual e redação publicitária. Busco aplicar minha criatividade e habilidades de planejamento de mídia para criar campanhas impactantes que engajem o público e aumentem a presença da marca no mercado.",
+    obejetivagropecuaria: "Sou um profissional da área agropecuária, com experiência em gestão rural e produção agrícola. Tenho conhecimento em zootecnia e sustentabilidade no campo, e busco contribuir com minha expertise para otimizar os processos de produção e garantir a sustentabilidade e o crescimento da atividade agropecuária.",
+    obejetivconstruçãoCivil: "Tenho experiência em projetos arquitetônicos e engenharia estrutural, com foco no gerenciamento de obras e segurança do trabalho. Busco aplicar minhas habilidades para garantir a entrega de obras com qualidade, segurança e dentro do prazo, sempre buscando soluções eficientes e sustentáveis.",
+    obejetivenergia: "Tenho experiência no setor de energia, com foco em fontes renováveis, como energia solar e eólica. Busco aplicar meus conhecimentos em eficiência energética e redes elétricas para desenvolver soluções inovadoras que atendam às necessidades do mercado, contribuindo para a sustentabilidade e a redução dos impactos ambientais.",
+    obejetivmeioAmbiente: "Sou um profissional com experiência em gestão ambiental e licenciamento, com o objetivo de promover práticas sustentáveis e políticas públicas ambientais. Busco implementar soluções que contribuam para a preservação do meio ambiente e para o desenvolvimento de atividades empresariais responsáveis e compatíveis com as exigências ambientais.",
+    obejetivturismo: "Tenho experiência em gestão turística e roteiros, com foco em hospitalidade e eventos. Meu objetivo é proporcionar experiências únicas aos turistas, promovendo o ecoturismo e criando pacotes personalizados que atendam às necessidades e expectativas dos clientes.",
+    obejetivarteCultura: "Sou profissional da área de arte e cultura, com experiência na produção cultural, curadoria e gestão de eventos. Busco contribuir para o desenvolvimento de projetos culturais inovadores, fomentando o acesso à arte e à cultura e promovendo a valorização das manifestações culturais locais.",
+    obejetivcomunicacao: "Sou especialista em comunicação organizacional e jornalismo, com experiência em assessoria de imprensa e produção textual. Meu objetivo é aplicar minhas habilidades em mídias sociais e comunicação estratégica para fortalecer a imagem institucional da empresa e garantir uma comunicação clara e eficiente com o público.",
+    obejetivtransporte: "Tenho experiência na gestão de frota e logística de transportes, com foco em otimização de processos e infraestrutura viária. Meu objetivo é melhorar a eficiência e a segurança no transporte de mercadorias e pessoas, garantindo a redução de custos e o cumprimento de prazos.",
+    obejetivcomercioExterior: "Tenho conhecimento em comércio exterior, com experiência em importação, exportação e logística internacional. Busco aplicar minhas habilidades em acordos comerciais e câmbio para otimizar os processos de importação e exportação, promovendo a competitividade da empresa no mercado internacional.",
+    obejetivtecnologiaAlimentos: "Sou especialista em tecnologia de alimentos, com experiência em processamento de alimentos e controle de qualidade. Meu objetivo é garantir a segurança alimentar e promover a inovação no setor, contribuindo para o desenvolvimento de novos produtos e processos alimentícios.",
+    obejetivpesquisa: "Tenho experiência em pesquisa científica, com forte conhecimento em metodologia científica, coleta de dados e análise estatística. Busco aplicar minhas habilidades para desenvolver projetos de pesquisa inovadores e de alto impacto, contribuindo para o avanço do conhecimento na área.",
+    obejetivservicosGerais: "Tenho experiência em serviços gerais, incluindo limpeza, manutenção predial e portaria. Meu objetivo é contribuir para o bom funcionamento das instalações, garantindo a qualidade e a organização do ambiente de trabalho.",
+    obejetivadministração: "Sou um profissional da área de administração, com experiência em planejamento estratégico, controle orçamentário e análise de processos. Busco aplicar minhas habilidades para otimizar a gestão da empresa, promovendo eficiência, redução de custos e alcance dos objetivos empresariais."
+};
+
+    function preencherPalavrasChave() {
+        const area1 = document.getElementById("area1").value;
+        const area2 = document.getElementById("area2").value;
+        const area3 = document.getElementById("area3").value;
+
+        const texto = [area1, area2, area3]
+            .filter(area => area && palavrasChave[area])
+            .map(area => palavrasChave[area])
+            .join(" | ");
+
+        document.getElementById("keywords").value = texto;
+    }
+
+    function gerarPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const margem = 10;
+    let y = 25;  // Aumentado para maior distância entre nome e primeiro título
+
+    // Função para adicionar título com fundo cinza escuro e texto branco
+    function adicionarTitulo(texto) {
+        doc.setFontSize(14); // Tamanho da fonte do título
+        doc.setTextColor(255, 255, 255); // Texto branco
+        doc.setFillColor(50, 50, 50); // Fundo cinza escuro (quase grafite)
+        const alturaTitulo = 6; // Reduzido para ajustar o preenchimento ao tamanho do título
+        doc.rect(margem, y - 4, 190, alturaTitulo, 'F'); // Fundo cinza escuro
+        doc.text(texto + ":", margem + 2, y); // Título com ":"
+        doc.setTextColor(0, 0, 0); // Reset para o texto preto
+        y += alturaTitulo + 5; // Aumentando o espaço entre o título e o conteúdo
+    }
+
+    // Função para adicionar o conteúdo com o texto alinhado à esquerda
+    function adicionarTexto(texto) {
+        doc.setFontSize(10);
+        const linhas = doc.splitTextToSize(texto, 190);
+        doc.text(linhas, margem, y);
+        y += linhas.length * 6;
+    }
+
+    // Cabeçalho centralizado (nome do usuário)
+    doc.setFont('times', 'normal');
+    doc.setFontSize(16);
+    const nome = document.getElementById("nome").value || "NOME NÃO INFORMADO";
+    doc.text(nome.toUpperCase(), 105, 15, null, null, "center");
+
+    // Separador entre o nome e os dados
+    y += 10; // Aumento da distância entre o nome e o primeiro título
+
+    // Dados do currículo
+    const seções = [
+        ["Dados Pessoais", "dadosPessoais"],
+		["Perfil Profissional", "perfil"],
+        ["Formação Acadêmica", "formacao"],
+        ["Experiência Profissional", "experiencia"],
+		["Idiomas", "idiomas"],
+		["Cursos de Qualificação", "cursosdequalificacao"],
+        ["Produção Bibliográfica e Técnica", "producao"],
+        ["Atividades de Extensão", "extensao"],
+        ["Eventos", "eventos"],
+        ["Orientações", "orientacoes"],
+        ["Bancas", "bancas"],
+        ["Indicadores", "indicadores"],
+        ["Habilidades e Competências", "keywords"] // Alterado para "Habilidades e Competências"
+    ];
+
+    for (const [titulo, id] of seções) {
+        const conteudo = document.getElementById(id).value;
+        if (conteudo) {
+            adicionarTitulo(titulo);
+            adicionarTexto(conteudo);
+            doc.line(margem, y, 200 - margem, y); // Linha de separação
+            y += 5; // Espaço para a linha de separação
+        }
+    }
+
+    // Adicionar a declaração final, centralizada
+    if (y > 260) {
+        doc.addPage();
+        y = 25; // Reseta a posição 'y' se houver uma nova página
+    }
+
+    // Linha antes da declaração final
+    doc.line(margem, 280, 200 - margem, 280); // Linha acima da declaração
+    y = 285; // Posição final para a declaração
+
+    // Declaração Final, sempre no final da página
+    doc.setFontSize(10);
+    doc.text("Declaro que as informações acima são verdadeiras e assumo total responsabilidade sobre seu conteúdo.", 105, y, null, null, "center");
+
+    // Adiciona a borda da página
+    doc.setDrawColor(0);
+    doc.setLineWidth(0.5);
+    doc.rect(5, 5, 200, 287); // Borda da página
+
+    doc.save("curriculo_lattes.pdf");
+}
+
+</script>
+</body>
+</html>
